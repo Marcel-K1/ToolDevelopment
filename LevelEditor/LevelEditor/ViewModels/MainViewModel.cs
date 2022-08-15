@@ -24,5 +24,7 @@ namespace LevelEditor.ViewModels
         //private bool CanShowMessage() => true;
 
         //private void OnShowMessage() => alerter.Dialog(null, "Closing Level-Editor", "Do you really want to close the application?");
+
+
     }
 }

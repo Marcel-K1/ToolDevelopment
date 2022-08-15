@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         DataContext="{Binding Path=MainViewModel, Source={StaticResource ResourceKey=Locator}}"
         d:DataContext="{d:DesignInstance Type=Viewmodels:MainViewModel}"
-        Height="450" 
-        Width="800"
-        Title="{DynamicResource MainWindowTitle}">
+        Height="1080" 
+        Width="1920"
+        Title="{DynamicResource MainWindowTitle}" Loaded="Window_Loaded">
 
     <Window.Resources>
         
@@ -125,7 +125,7 @@
             <Border Grid.Column="1" 
                     Grid.Row="1"
                     Grid.RowSpan="2"
-                    Background="CornflowerBlue"/>
+                    />
 
             <GridSplitter Grid.Column="1" 
                           Grid.Row="1"
@@ -133,6 +133,17 @@
                           HorizontalAlignment="Left"
                           BorderBrush="Gray" 
                           BorderThickness="1"/>
+
+            <Canvas Name="CustomCanvas"
+                    MouseLeftButtonDown="AddOrRemoveImage"
+                    Height="800"
+                    Width="1280"
+                    Focusable="True"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Grid.RowSpan="2">
+
+            </Canvas>
 
         </Grid>
 

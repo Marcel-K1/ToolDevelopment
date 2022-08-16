@@ -4,9 +4,9 @@
                     xmlns:local="clr-namespace:LevelEditor">
 
     <system:String x:Key="MainWindowTitle">
-        
+
         Level-Editor
-    
+
     </system:String>
 
 

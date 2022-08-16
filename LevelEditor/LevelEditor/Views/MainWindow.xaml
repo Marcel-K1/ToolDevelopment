@@ -10,11 +10,14 @@
         d:DataContext="{d:DesignInstance Type=Viewmodels:MainViewModel}"
         Height="1080" 
         Width="1920"
-        Title="{DynamicResource MainWindowTitle}" Loaded="Window_Loaded">
+        Title="{DynamicResource MainWindowTitle}">
 
     <Window.Resources>
         
         <ResourceDictionary>
+            
+            <Image x:Key="water" Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png" x:Shared="false" />
+            
             
             <ResourceDictionary.MergedDictionaries>
 
@@ -52,7 +55,8 @@
 
                 <Separator />
 
-                <MenuItem Header="E_xit" 
+                <MenuItem Header="E_xit"
+                          Click="OnExitClick"
                           InputGestureText="Alt+F4" />
 
             </MenuItem>
@@ -60,10 +64,10 @@
             <MenuItem Header="Edit">
 
                 <MenuItem Header="Project Settings" 
-                          Click="ProjectSettings_Click"/>
+                          Click="OnProjectSettingsClick"/>
 
                 <MenuItem Header="Preferences" 
-                          Click="Preferences_Click"/>
+                          Click="OnPreferencesClick"/>
 
             </MenuItem>
 
@@ -87,6 +91,28 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+            <StackPanel Grid.RowSpan="2">
+                <Button Click="Button_Click_1">
+                    
+                    <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png"
+                        MouseRightButtonDown="WaterButtonDown">
+                        
+                    </Image>
+                    
+                </Button>
+
+                <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\grass.png"
+                    MouseRightButtonDown="GrassButtonDown">
+
+                </Image>
+
+                <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\ground.png"
+                    MouseRightButtonDown="GroundButtonDown">
+
+                </Image>
+
+            </StackPanel>
 
             <TreeView Grid.Row="2" 
                       Grid.Column="0">
@@ -124,8 +150,7 @@
 
             <Border Grid.Column="1" 
                     Grid.Row="1"
-                    Grid.RowSpan="2"
-                    />
+                    Grid.RowSpan="2"/>
 
             <GridSplitter Grid.Column="1" 
                           Grid.Row="1"
@@ -135,13 +160,38 @@
                           BorderThickness="1"/>
 
             <Canvas Name="CustomCanvas"
-                    MouseLeftButtonDown="AddOrRemoveImage"
                     Height="800"
                     Width="1280"
                     Focusable="True"
                     Grid.Column="1"
                     Grid.Row="1"
                     Grid.RowSpan="2">
+                    <!--MouseLeftButtonDown="AddOrRemoveImage"-->
+                
+                <Border BorderBrush="Black"
+                        BorderThickness="1">
+                    
+                    <StackPanel Background="Bisque"
+                                Width="200"
+                                Height="200"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                >
+                        <Button Click="Button_Click_2"
+                                Height="200"
+                                Width="200">
+                            
+                            <Image Name="Image"
+                                   MouseDown="Image_MouseDown">
+                                
+                                
+                            </Image>
+                            
+                        </Button>
+                        
+                    </StackPanel>
+  
+                </Border>
 
             </Canvas>
 

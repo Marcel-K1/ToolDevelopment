@@ -155,7 +155,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\grass.png" />
+    <Resource Include="Icons\ground.png" />
+    <Resource Include="Icons\water.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\close_104px.png" />
     <Resource Include="Icons\collapse_104px.png" />

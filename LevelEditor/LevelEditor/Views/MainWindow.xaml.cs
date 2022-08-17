@@ -42,8 +42,6 @@ namespace LevelEditor
 
             ViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
 
-
-            ////Wir weisen jedem Key des Dictionaries einen Value zu:
             Image waterImage = new Image();
             BitmapImage myBitmapImage1 = new BitmapImage();
             myBitmapImage1.BeginInit();
@@ -65,23 +63,19 @@ namespace LevelEditor
             myBitmapImage3.EndInit();
             groundImage.Source = myBitmapImage3;
 
+            //Wir weisen jedem Key des Dictionaries einen Value zu:
             tileImages[Tiles.Water] = waterImage;
             tileImages[Tiles.Grass] = grassImage;
             tileImages[Tiles.Ground] = groundImage;
         }
+
         public MainViewModel ViewModel
         {
             get => (MainViewModel)GetValue(DataContextProperty);
             set => SetValue(DataContextProperty, value);
         }
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            var image = sender as Button;
-            image.Background = Brushes.Black;
-            //Button.Children.image = tileImages[selectedImage];
-        }
 
-        //Click 
+
         private void OnPreferencesClick(object sender, RoutedEventArgs e)
         {
             var window = new PreferencesWindow();
@@ -96,6 +90,7 @@ namespace LevelEditor
         {
             Application.Current.Shutdown();
         }
+
 
         //private void buttonClick(object sender, RoutedEventArgs e)
         //{
@@ -139,14 +134,31 @@ namespace LevelEditor
         //}
 
 
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             selectedImage = Tiles.Water;
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Image = tileImages[selectedImage];
+        }
+
+
+
         private void WaterButtonDown(object sender, MouseButtonEventArgs e)
         {
             selectedImage = Tiles.Water;
         }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image = tileImages[selectedImage];
+        }
+
+
+
 
         private void GrassButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -157,6 +169,9 @@ namespace LevelEditor
         {
             selectedImage = Tiles.Ground;
         }
+
+
+
 
 
         //private void AddOrRemoveImage(object sender, MouseButtonEventArgs e)
@@ -192,13 +207,13 @@ namespace LevelEditor
         //        CustomCanvas.Children.Add(newRectangle);
         //    }
         //}
+
         private void DrawGrid()
         {
-            #region
+            #region Drawing on Canvas
+
             //double HCanvas = CustomCanvas.ActualHeight;
             //double WCanvas = CustomCanvas.ActualWidth;
-
-            //double[] vertices = new double[(int)((HCanvas +1f) * (WCanvas+1f))];
 
             //Border border = new Border()
             //{
@@ -211,7 +226,7 @@ namespace LevelEditor
 
             //CustomCanvas.Children.Add(border);
 
-            //for (int i = 0; i < HCanvas/ 20; i++)
+            //for (int i = 0; i < HCanvas / 20; i++)
             //{
             //    double space = i * 20;
             //    Line line = new Line()
@@ -262,71 +277,45 @@ namespace LevelEditor
             //    }
             //}
 
-            //for (int i = 0; i < vertices; i++)
-            //{
-
-            //}
             #endregion
 
-            //Grid DynamicGrid = new Grid()
-            //{
-            //    Width = 400,
+            #region Building Grid inside Canvas
 
-            //    Height = 400,
+            Grid DynamicGrid = new Grid()
+            {
+                Width = 400,
 
-            //    HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 400,
 
-            //    VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
 
-            //    ShowGridLines = true,
+                VerticalAlignment = VerticalAlignment.Center,
 
-            //    Background = new SolidColorBrush(Colors.LightSteelBlue),
+                ShowGridLines = true,
 
-            //};
-            //CustomCanvas.Children.Add(DynamicGrid);
+                Background = new SolidColorBrush(Colors.LightSteelBlue),
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    ColumnDefinition gridCol = new ColumnDefinition();
+            };
+            CustomCanvas.Children.Add(DynamicGrid);
 
-
-            //    DynamicGrid.ColumnDefinitions.Add(gridCol);
-            //}
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    RowDefinition gridRow = new RowDefinition();
-                
-            //    DynamicGrid.RowDefinitions.Add(gridRow);
-            //}
+            for (int i = 0; i < 10; i++)
+            {
+                ColumnDefinition gridCol = new ColumnDefinition();
 
 
+                DynamicGrid.ColumnDefinitions.Add(gridCol);
+            }
 
-            //Image icon = new Image();
+            for (int i = 0; i < 10; i++)
+            {
+                RowDefinition gridRow = new RowDefinition();
 
-            //string packUri = "C://Users/Klein/Documents/GitHub/Eigenprojekte/ToolDevelopment_Abgabe/LevelEditor/LevelEditor/Icons/add_new_104px.png";
+                DynamicGrid.RowDefinitions.Add(gridRow);
+            }
 
-            //icon.Source = new ImageSourceConverter().ConvertFromString(packUri) as ImageSource;
-
-            //Grid.SetRow(icon, 0);
-
-            //Grid.SetColumn(icon, 0);
-
-
+            #endregion
 
         }
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var image = sender as Image;
-
-            image = tileImages[selectedImage];
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
 
         //private void Window_Loaded(object sender, RoutedEventArgs e)

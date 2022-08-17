@@ -93,14 +93,13 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.RowSpan="2">
-                <Button Click="Button_Click_1">
-                    
-                    <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png"
+
+                <Button Click="Button_Click_1"
+                        Height="100"/>
+
+                <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png"
                         MouseRightButtonDown="WaterButtonDown">
-                        
-                    </Image>
-                    
-                </Button>
+                </Image>
 
                 <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\grass.png"
                     MouseRightButtonDown="GrassButtonDown">
@@ -175,20 +174,25 @@
                                 Width="200"
                                 Height="200"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                >
-                        <Button Click="Button_Click_2"
-                                Height="200"
-                                Width="200">
-                            
-                            <Image Name="Image"
-                                   MouseDown="Image_MouseDown">
-                                
-                                
-                            </Image>
+                                VerticalAlignment="Center">
+                        
+                        <Button Height="200"
+                                Width="200"
+                                Click="Button_Click_2">
                             
                         </Button>
-                        
+
+                        <Border BorderThickness="2" 
+                                BorderBrush="Black">
+                            
+                            <Image Name="Image"
+                                   MouseRightButtonDown="Image_MouseDown"
+                                   Height="200"
+                                   Width="200" 
+                                   />
+                            
+                        </Border>
+
                     </StackPanel>
   
                 </Border>

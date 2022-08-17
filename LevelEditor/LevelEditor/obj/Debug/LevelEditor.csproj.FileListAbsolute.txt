@@ -21,6 +21,7 @@ C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\LevelEditor.csproj.AssemblyReference.cache
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\Views\MainWindow.g.cs
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\Views\PreferencesWindow.g.cs
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\Views\ProjectSettingsWindow.g.cs
@@ -40,4 +41,3 @@ C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\LevelEditor.csproj.CopyComplete
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\LevelEditor.exe
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\LevelEditor.pdb
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\obj\Debug\LevelEditor.csproj.AssemblyReference.cache

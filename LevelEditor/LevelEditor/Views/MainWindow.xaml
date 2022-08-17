@@ -182,23 +182,26 @@
                             
                         </Button>
 
-                        <Border BorderThickness="2" 
-                                BorderBrush="Black">
-                            
-                            <Image Name="Image"
-                                   MouseRightButtonDown="Image_MouseDown"
-                                   Height="200"
-                                   Width="200" 
-                                   />
-                            
-                        </Border>
+
+                        <!--<Image Name="Image"
+                               MouseRightButtonDown="Image_MouseDown"
+                               Height="200"
+                               Width="200" Source="Test.png" RenderTransformOrigin="-0.702,-0.816" 
+                               />-->
+
 
                     </StackPanel>
   
                 </Border>
 
             </Canvas>
-
+            <Image Name="Image"
+                               MouseRightButtonDown="Image_MouseDown"
+                               Height="200"
+                               Width="200" 
+                               Grid.Column="1"
+                                Grid.Row="2"
+                               />
         </Grid>
 
     </DockPanel>

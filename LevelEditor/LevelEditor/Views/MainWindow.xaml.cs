@@ -142,7 +142,7 @@ namespace LevelEditor
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Image = tileImages[selectedImage];
+            Image.Source = tileImages[selectedImage].Source;
         }
 
 
@@ -154,7 +154,7 @@ namespace LevelEditor
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Image = tileImages[selectedImage];
+            Image.Source = tileImages[selectedImage].Source;
         }
 
 

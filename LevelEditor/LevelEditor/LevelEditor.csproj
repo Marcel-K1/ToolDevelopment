@@ -89,17 +89,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\TileControl.xaml.cs">
+      <DependentUpon>TileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LevelSerializer.cs" />
     <Compile Include="Models\Project.cs" />
-    <Compile Include="Services\DefaultAlert.cs" />
+    <Compile Include="Models\Tile.cs" />
     <Compile Include="Services\ProjectManager.cs" />
     <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="ViewModels\ProjectSettingsViewModel.cs" />
+    <Compile Include="ViewModels\TileViewModel.cs" />
     <Compile Include="Views\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectSettingsWindow.xaml.cs">
       <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\TileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Data\ResourceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,7 +121,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\IAlerter.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -161,15 +169,12 @@
     <Resource Include="Icons\water.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\close_104px.png" />
-    <Resource Include="Icons\collapse_104px.png" />
-    <Resource Include="Icons\minimize_window_104px.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\add_new_104px.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Views\Test.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\help.png" />
+    <Resource Include="Icons\new.png" />
+    <Resource Include="Icons\tooltip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />

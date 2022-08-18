@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using LevelEditor.ViewModels;
 using LevelEditor.Views;
+using LevelEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LevelEditor.Properties;
+using System.ComponentModel;
+using Microsoft.Win32;
+using LevelEditor.Controls;
 
 namespace LevelEditor
 {
@@ -23,57 +28,140 @@ namespace LevelEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum Tiles
+        private const string DIALOG_FILTERS = "Data Files|*.dat;*.bin|Alle Dateien (*.*)|*.*";
+
+        public enum Tiles
         {
             Water,
             Grass,
             Ground
         }
 
-        Dictionary<Tiles, Image> tileImages = new Dictionary<Tiles, Image>();
-
-        Tiles selectedImage = Tiles.Grass;
-
-        //Tiles[,] tilemap = new Tiles[10, 10];
-
-        public MainWindow()
+        public static RoutedUICommand CustomOpenCommand = new RoutedUICommand("_Open", "CustomOpen", typeof(MainWindow), new InputGestureCollection
         {
-            InitializeComponent();
+            new KeyGesture(Key.A, ModifierKeys.Alt)
+        });
 
-            ViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
 
-            Image waterImage = new Image();
-            BitmapImage myBitmapImage1 = new BitmapImage();
-            myBitmapImage1.BeginInit();
-            myBitmapImage1.UriSource = new Uri(@"C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png");
-            myBitmapImage1.EndInit();
-            waterImage.Source = myBitmapImage1;
+        public Dictionary<Tiles, ImageSource> tileImages = new Dictionary<Tiles, ImageSource>();
+        public Dictionary<Tiles, ImageSource> TileImages { get => tileImages; set => tileImages = value; }
 
-            Image grassImage = new Image();
-            BitmapImage myBitmapImage2 = new BitmapImage();
-            myBitmapImage2.BeginInit();
-            myBitmapImage2.UriSource = new Uri(@"C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\grass.png");
-            myBitmapImage2.EndInit();
-            grassImage.Source = myBitmapImage2;
+        private Tiles selectedImage = Tiles.Grass;
+        public Tiles SelectedImage { get => selectedImage; set => selectedImage = value; }
 
-            Image groundImage = new Image();
-            BitmapImage myBitmapImage3 = new BitmapImage();
-            myBitmapImage3.BeginInit();
-            myBitmapImage3.UriSource = new Uri(@"C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\ground.png");
-            myBitmapImage3.EndInit();
-            groundImage.Source = myBitmapImage3;
-
-            //Wir weisen jedem Key des Dictionaries einen Value zu:
-            tileImages[Tiles.Water] = waterImage;
-            tileImages[Tiles.Grass] = grassImage;
-            tileImages[Tiles.Ground] = groundImage;
-        }
+        private List<Tile> tilesList;
+        public List<Tile> TilesList { get => tilesList; set => tilesList = value; }
 
         public MainViewModel ViewModel
         {
             get => (MainViewModel)GetValue(DataContextProperty);
             set => SetValue(DataContextProperty, value);
         }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            InitializeMainWindow();
+
+            ViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+
+            TileImages[Tiles.Water] = new ImageSourceConverter().ConvertFrom(new Uri("Icons/water.png", UriKind.Relative)) as ImageSource; 
+            TileImages[Tiles.Grass] = new ImageSourceConverter().ConvertFrom(new Uri("Icons/grass.png", UriKind.Relative)) as ImageSource; 
+            TileImages[Tiles.Ground] = new ImageSourceConverter().ConvertFrom(new Uri("Icons/ground.png", UriKind.Relative)) as ImageSource;
+
+            DrawGrid();
+            SetGrid();
+
+        }
+
+
+        private void DrawGrid()
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                var rd = new RowDefinition();
+                rd.Height = new GridLength(200);
+                EditorGrid.RowDefinitions.Add(rd);
+
+            }
+
+            for (int y = 0; y < 3; y++)
+            {
+                var cd = new ColumnDefinition();
+                cd.Width = new GridLength(200);
+                EditorGrid.ColumnDefinitions.Add(cd);
+            }
+
+        }
+        private void SetGrid()
+        {
+
+            tilesList = new List<Tile>();
+
+            for (int x = 0; x < 3; x++)
+            {
+
+                for (int y = 0; y < 3; y++)
+                {
+                    Tile tile = new Tile(this);
+                    tile.TileControl.TileImage.Source = tileImages[selectedImage];
+
+                    EditorGrid.Children.Add(tile.TileControl);
+
+                    //Wichtig fürs Speichern:
+                    tile.X = x;
+                    tile.Y = y;
+                    tilesList.Add(tile);
+
+                    Grid.SetRow(tile.TileControl, x);
+                    Grid.SetColumn(tile.TileControl, y);
+                }
+            }
+
+        }
+
+
+
+        private void InitializeMainWindow()
+        {
+            Height = Settings.Default.MainWindowHeight;
+            Width = Settings.Default.MainWindowWidth;
+            Top = Settings.Default.MainWindowTop;
+            Left = Settings.Default.MainWindowLeft;
+
+            if (Settings.Default.Maximized)
+            {
+                WindowState = WindowState.Maximized;
+            }
+
+            this.Closing += Window_Closing;
+
+        }
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+
+            if (WindowState == WindowState.Maximized)
+            {
+                Settings.Default.MainWindowTop = RestoreBounds.Top;
+                Settings.Default.MainWindowLeft = RestoreBounds.Left;
+                Settings.Default.MainWindowHeight = RestoreBounds.Height;
+                Settings.Default.MainWindowWidth = RestoreBounds.Width;
+                Settings.Default.Maximized = true;
+            }
+            else
+            {
+                Settings.Default.MainWindowTop = this.Top;
+                Settings.Default.MainWindowLeft = this.Left;
+                Settings.Default.MainWindowHeight = this.Height;
+                Settings.Default.MainWindowWidth = this.Width;
+                Settings.Default.Maximized = false;
+            }
+
+            Settings.Default.Save();
+
+        }
+
 
 
         private void OnPreferencesClick(object sender, RoutedEventArgs e)
@@ -92,236 +180,83 @@ namespace LevelEditor
         }
 
 
-        //private void buttonClick(object sender, RoutedEventArgs e)
-        //{
-
-        //    for (int x = 0; x < 10; x++)
-        //    {
-        //        for (int y = 0; y < 10; y++)
-        //        {
-        //            Image image = new Image();
-        //            //image.Name = x.ToString() + "," + y.ToString();
-        //            image.DragOver += OnDragOver;
-
-        //        }
-
-        //    }
-        //}
-
-        //void OnDragOver(object sender, RoutedEventArgs e)
-        //{
-        //    var image = sender as Image;
-
-        //    // name="x15_33"
-        //    string name = image.Name.Substring(1);
-        //    string[] coords = name.Split('_');
-        //    int xCoord = int.Parse(coords[0]);
-        //    int yCoord = int.Parse(coords[1]);
-        //    image.Source = tileImages[selectedImage];
-        //    tilemap[xCoord, yCoord] = selectedImage;
-        //}
-
-        //private void button1_Click(object sender, RoutedEventArgs e)
-        //{
-        //    BinaryFormatter bf = new BinaryFormatter();
-        //    Stream stream = new FileStream("level.dat", FileMode.OpenOrCreate);
-        //    bf.Serialize(stream, tilemap);
-        //}
-
-        //private void x0_0_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    //OnDragOver(sender, e);
-        //}
-
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            selectedImage = Tiles.Water;
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            Image.Source = tileImages[selectedImage].Source;
-        }
-
-
 
         private void WaterButtonDown(object sender, MouseButtonEventArgs e)
         {
-            selectedImage = Tiles.Water;
+            SelectedImage = Tiles.Water;
         }
-
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Image.Source = tileImages[selectedImage].Source;
-        }
-
-
-
-
         private void GrassButtonDown(object sender, MouseButtonEventArgs e)
         {
-            selectedImage = Tiles.Grass;
+            SelectedImage = Tiles.Grass;
         }
-
         private void GroundButtonDown(object sender, MouseButtonEventArgs e)
         {
-            selectedImage = Tiles.Ground;
+            SelectedImage = Tiles.Ground;
         }
 
 
 
-
-
-        //private void AddOrRemoveImage(object sender, MouseButtonEventArgs e)
-        //{
-        //    Brush customColor;
-        //    Random r = new Random();
-
-        //    if (e.OriginalSource is Rectangle)
-        //    {
-        //        Rectangle activeRectangle = (Rectangle)e.OriginalSource;
-
-        //        CustomCanvas.Children.Remove(activeRectangle);
-        //    }
-        //    else
-        //    {
-        //        customColor = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 255)));
-
-        //        Rectangle newRectangle = new Rectangle
-        //        {
-
-        //            Width = 50,
-        //            Height = 50,
-
-        //            Fill = customColor,
-        //            StrokeThickness = 3,
-        //            Stroke = Brushes.Black
-
-        //        };
-
-        //        Canvas.SetLeft(newRectangle, Mouse.GetPosition(CustomCanvas).X);
-        //        Canvas.SetTop(newRectangle, Mouse.GetPosition(CustomCanvas).Y);
-
-        //        CustomCanvas.Children.Add(newRectangle);
-        //    }
-        //}
-
-        private void DrawGrid()
+        private void NewCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            #region Drawing on Canvas
-
-            //double HCanvas = CustomCanvas.ActualHeight;
-            //double WCanvas = CustomCanvas.ActualWidth;
-
-            //Border border = new Border()
-            //{
-            //    Width = WCanvas,
-            //    Height = HCanvas,
-            //    Background = Brushes.LightYellow,
-            //    BorderBrush = Brushes.Red,
-            //    BorderThickness = new Thickness(3)
-            //};
-
-            //CustomCanvas.Children.Add(border);
-
-            //for (int i = 0; i < HCanvas / 20; i++)
-            //{
-            //    double space = i * 20;
-            //    Line line = new Line()
-            //    {
-            //        X1 = 0,
-            //        X2 = WCanvas,
-            //        Y1 = space,
-            //        Y2 = space,
-            //        StrokeThickness = 1,
-            //        Stroke = Brushes.Black
-
-            //    };
-
-            //    CustomCanvas.Children.Add(line);
-            //}
-
-            //for (int i = 0; i < WCanvas / 20; i++)
-            //{
-            //    double space = i * 20;
-            //    Line line = new Line()
-            //    {
-            //        Y1 = 0,
-            //        Y2 = HCanvas,
-            //        X1 = space,
-            //        X2 = space,
-            //        StrokeThickness = 1,
-            //        Stroke = Brushes.Black
-
-            //    };
-
-            //    CustomCanvas.Children.Add(line);
-            //}
-
-            //for (int y = 0; y < WCanvas / 20; y++)
-            //{
-
-            //    for (int x = 0; x < HCanvas / 20; x++)
-            //    {
-            //        Image image = new Image()
-            //        {
-            //            Height = HCanvas / 20,
-            //            Width = WCanvas / 20
-            //        };
-
-            //        Canvas.SetLeft(image, y);
-            //        Canvas.SetTop(image, x);
-            //        CustomCanvas.Children.Add(image);
-            //    }
-            //}
-
-            #endregion
-
-            #region Building Grid inside Canvas
-
-            Grid DynamicGrid = new Grid()
-            {
-                Width = 400,
-
-                Height = 400,
-
-                HorizontalAlignment = HorizontalAlignment.Center,
-
-                VerticalAlignment = VerticalAlignment.Center,
-
-                ShowGridLines = true,
-
-                Background = new SolidColorBrush(Colors.LightSteelBlue),
-
-            };
-            CustomCanvas.Children.Add(DynamicGrid);
-
-            for (int i = 0; i < 10; i++)
-            {
-                ColumnDefinition gridCol = new ColumnDefinition();
-
-
-                DynamicGrid.ColumnDefinitions.Add(gridCol);
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                RowDefinition gridRow = new RowDefinition();
-
-                DynamicGrid.RowDefinitions.Add(gridRow);
-            }
-
-            #endregion
 
         }
+        private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = DIALOG_FILTERS;
+            if (ofd.ShowDialog() ?? false)
+            {
+                string filename = ofd.FileName;
 
+                try
+                {
+                    List<Tile> tileList = LevelSerializer.Load(filename);
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    DrawGrid();
-        //}
+                    if (tileList != null)
+                    {
+                        EditorGrid.Children.Clear();
+                        foreach (var tile in tileList)
+                        {
+                            EditorGrid.Children.Add(tile.TileControl);
+                            Grid.SetRow(tile.TileControl, tile.X);
+                            Grid.SetColumn(tile.TileControl, tile.Y);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = DIALOG_FILTERS;
+            if (sfd.ShowDialog() ?? false)
+            {
+                string filename = sfd.FileName;
+
+                try
+                {
+                    LevelSerializer.Save(filename, tilesList);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private void HelpCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://sites.google.com/view/leveleditor-hilfe/startseite");
+        }
+        private void CanAlwaysExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+            e.CanExecute = true;
+
+        }
 
     }
 }

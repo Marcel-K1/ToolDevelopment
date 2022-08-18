@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LevelEditor.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace LevelEditor.ViewModels
 {
-    public class PreferencesViewModel : ObservableObject
+    public class TileViewModel : ObservableObject
     {
 
-    }
+	}
 
 }

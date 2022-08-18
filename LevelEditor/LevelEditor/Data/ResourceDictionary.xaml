@@ -5,9 +5,25 @@
 
     <system:String x:Key="MainWindowTitle">
 
-        Level-Editor
+        LevelEditor
 
     </system:String>
+
+    <ImageSource x:Key="NewImage">
+        \Icons\new.png
+    </ImageSource>
+
+    <ImageSource x:Key="TooltipImage">
+        \Icons\tooltip.png
+    </ImageSource>
+
+    <ImageSource x:Key="HelpImage">
+        \Icons\help.png
+    </ImageSource>
+
+    <SolidColorBrush x:Key="BackgroundColor1" Color="BlanchedAlmond" />
+
+    <SolidColorBrush x:Key="BackgroundColor2" Color="AliceBlue" />
 
 
 </ResourceDictionary>

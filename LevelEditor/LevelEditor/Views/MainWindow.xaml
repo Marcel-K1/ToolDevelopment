@@ -8,20 +8,34 @@
         mc:Ignorable="d"
         DataContext="{Binding Path=MainViewModel, Source={StaticResource ResourceKey=Locator}}"
         d:DataContext="{d:DesignInstance Type=Viewmodels:MainViewModel}"
-        Height="1080" 
-        Width="1920"
+        Height="768" 
+        Width="1024"
         Title="{DynamicResource MainWindowTitle}">
+
+    <Window.CommandBindings>
+
+        <CommandBinding Command="New" 
+                        Executed="NewCommandBinding_Executed" 
+                        CanExecute="CanAlwaysExecute" />
+        <CommandBinding Command="Open" 
+                        Executed="OpenCommandBinding_Executed" 
+                        CanExecute="CanAlwaysExecute" />
+        <CommandBinding Command="Save" 
+                        Executed="SaveCommandBinding_Executed" 
+                        CanExecute="CanAlwaysExecute" />
+        <CommandBinding Command="Help"
+                        Executed="HelpCommandBinding_Executed"
+                        CanExecute="CanAlwaysExecute" />
+
+    </Window.CommandBindings>
 
     <Window.Resources>
         
         <ResourceDictionary>
             
-            <Image x:Key="water" Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png" x:Shared="false" />
-            
-            
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Data\ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Data/ResourceDictionary.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
             
@@ -35,23 +49,25 @@
 
             <MenuItem Header="File">
 
-                <MenuItem Header="_New">
+                <MenuItem Header="_New"
+                          Command="New">
 
                     <MenuItem.Icon>
 
-                        <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\add_new_104px.png" IsEnabled="False" />
+                        <Image Source="{DynamicResource NewImage}" 
+                               IsEnabled="False"/>
 
                     </MenuItem.Icon>
 
                 </MenuItem>
 
-                <MenuItem Header="_Open..."/>
+                <MenuItem Header="_Open..."
+                          Command="Open"/>
 
                 <Separator />
 
-                <MenuItem Header="_Save"/>
-
-                <MenuItem Header="Save _As..."/>
+                <MenuItem Header="_Save"
+                          Command="Save"/>
 
                 <Separator />
 
@@ -66,142 +82,130 @@
                 <MenuItem Header="Project Settings" 
                           Click="OnProjectSettingsClick"/>
 
-                <MenuItem Header="Preferences" 
-                          Click="OnPreferencesClick"/>
+            </MenuItem>
+
+            <MenuItem Header="_Help">
+
+                <MenuItem Header="_Help" 
+                          Command="Help">
+
+                    <MenuItem.Icon>
+
+                        <Image Source="{DynamicResource HelpImage}" />
+
+                    </MenuItem.Icon>
+
+                </MenuItem>
+
 
             </MenuItem>
 
-            <MenuItem Header="View"/>
-
-            <MenuItem Header="Window"/>
-
-            <MenuItem Header="Help"/>
 
         </Menu>
 
-        <Grid>
+        <Grid Background="{DynamicResource BackgroundColor1}">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.RowSpan="2">
-
-                <Button Click="Button_Click_1"
-                        Height="100"/>
-
-                <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\water.png"
-                        MouseRightButtonDown="WaterButtonDown">
-                </Image>
-
-                <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\grass.png"
-                    MouseRightButtonDown="GrassButtonDown">
-
-                </Image>
-
-                <Image Source="C:\Users\Klein\Documents\GitHub\Eigenprojekte\ToolDevelopment_Abgabe\LevelEditor\LevelEditor\Icons\ground.png"
-                    MouseRightButtonDown="GroundButtonDown">
-
-                </Image>
-
-            </StackPanel>
-
-            <TreeView Grid.Row="2" 
-                      Grid.Column="0">
-
-                <TreeViewItem Header="Overworld 1">
-
-                    <TreeViewItem Header="Continent A"/>
-
-                </TreeViewItem>
-
-                <TreeViewItem Header="Overworld 2">
-
-                    <TreeViewItem Header="Continent A"/>
-
-                </TreeViewItem>
-
-            </TreeView>
-
-            <GridSplitter Grid.Row="1" 
-                          VerticalAlignment="Bottom" 
-                          HorizontalAlignment="Stretch" 
-                          BorderBrush="Gray" 
-                          BorderThickness="1"/>
-
-            <ToolBar Grid.Column="1"
-                     Grid.Row="0"
-                     ToolBarTray.IsLocked="True" 
-                     DockPanel.Dock="Top">
+            <StackPanel Grid.RowSpan="3"
+                        Background="{DynamicResource BackgroundColor2}">
 
                 <Button>
-                    Paint
+
+                    <Button.ToolTip>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image Source="{DynamicResource TooltipImage}"/>
+                            <TextBlock Text="Click with LeftMouseButton to select this tile" 
+                                       VerticalAlignment="Center" 
+                                       Margin="10 0 0 0" />
+
+                        </StackPanel>
+
+                    </Button.ToolTip>
+                    
+                    <Image Source="/Icons/water.png"
+                            MouseLeftButtonDown="WaterButtonDown">
+                    </Image>
+
                 </Button>
 
-            </ToolBar>
+                <Button>
 
-            <Border Grid.Column="1" 
-                    Grid.Row="1"
-                    Grid.RowSpan="2"/>
+                    <Button.ToolTip>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image Source="{DynamicResource TooltipImage}"/>
+                            <TextBlock Text="Click with LeftMouseButton to select this tile" 
+                                       VerticalAlignment="Center" 
+                                       Margin="10 0 0 0" />
+
+                        </StackPanel>
+
+                    </Button.ToolTip>
+                    
+                    <Image Source="/Icons/grass.png"
+                        MouseLeftButtonDown="GrassButtonDown">
+
+                    </Image>
+
+                </Button>
+
+                <Button>
+
+                    <Button.ToolTip>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image Source="{DynamicResource TooltipImage}"/>
+                            <TextBlock Text="Click with LeftMouseButton to select this tile" 
+                                       VerticalAlignment="Center" 
+                                       Margin="10 0 0 0" />
+
+                        </StackPanel>
+
+                    </Button.ToolTip>
+                    
+                    <Image Source="/Icons/ground.png"
+                        MouseLeftButtonDown="GroundButtonDown">
+
+                    </Image>
+
+                </Button>
+
+            </StackPanel>
 
             <GridSplitter Grid.Column="1" 
                           Grid.Row="1"
                           Grid.RowSpan="2"
                           HorizontalAlignment="Left"
                           BorderBrush="Gray" 
-                          BorderThickness="1"/>
+                          BorderThickness="2"/>
 
-            <Canvas Name="CustomCanvas"
-                    Height="800"
-                    Width="1280"
-                    Focusable="True"
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Grid.RowSpan="2">
-                    <!--MouseLeftButtonDown="AddOrRemoveImage"-->
-                
-                <Border BorderBrush="Black"
-                        BorderThickness="1">
-                    
-                    <StackPanel Background="Bisque"
-                                Width="200"
-                                Height="200"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                        
-                        <Button Height="200"
-                                Width="200"
-                                Click="Button_Click_2">
-                            
-                        </Button>
+            <Grid Name="EditorGrid"
+                  Height="600"
+                  Width="600"
+                  Grid.Column="1"
+                  Grid.Row="0"
+                  Grid.RowSpan="3"
+                  Background="{DynamicResource BackgroundColor2}">
 
+                <Border BorderBrush="Gray" 
+                        BorderThickness="3">
 
-                        <!--<Image Name="Image"
-                               MouseRightButtonDown="Image_MouseDown"
-                               Height="200"
-                               Width="200" Source="Test.png" RenderTransformOrigin="-0.702,-0.816" 
-                               />-->
-
-
-                    </StackPanel>
-  
                 </Border>
 
-            </Canvas>
-            <Image Name="Image"
-                               MouseRightButtonDown="Image_MouseDown"
-                               Height="200"
-                               Width="200" 
-                               Grid.Column="1"
-                                Grid.Row="2"
-                               />
+            </Grid>
+
         </Grid>
 
     </DockPanel>

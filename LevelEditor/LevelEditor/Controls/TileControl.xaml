@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="LevelEditor.Controls.TileControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             DataContext="{Binding Path=TileViewModel, Source={StaticResource ResourceKey=Locator}}"
+             xmlns:local="clr-namespace:LevelEditor.Controls"
+             xmlns:Viewmodels="clr-namespace:LevelEditor.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=Viewmodels:TileViewModel}"
+             d:DesignHeight="50" 
+             d:DesignWidth="50">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Data/ResourceDictionary.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Border BorderThickness="2" 
+            BorderBrush="Black"
+            Background="AntiqueWhite">
+
+        <Button>
+
+                <Button.ToolTip>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image Source="{DynamicResource TooltipImage}"/>
+                        <TextBlock Text="Click with LeftMouseButton to fill with selected tile" 
+                                       VerticalAlignment="Center" 
+                                       Margin="10 0 0 0" />
+
+                    </StackPanel>
+
+                </Button.ToolTip>
+                
+                <Image Name="TileImage"
+                   MouseLeftButtonDown="Tile_MouseLeftButtonDown">
+                </Image>
+
+        </Button>
+
+    </Border>
+        
+</UserControl>

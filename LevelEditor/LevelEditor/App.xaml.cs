@@ -23,7 +23,10 @@ namespace LevelEditor
             ServiceCollection services = new ServiceCollection();
             services.AddSingleton(this);
             services.AddSingleton<MainViewModel>();
-            //services.AddTransient<IAlerter>();
+            services.AddSingleton<PreferencesViewModel>();
+            services.AddSingleton<ProjectSettingsViewModel>();
+            services.AddSingleton<TileViewModel>();
+
 
             Ioc.Default.ConfigureServices(services.BuildServiceProvider());
         }

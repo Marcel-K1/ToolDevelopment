@@ -20,6 +20,7 @@ namespace LevelEditor
         public MainViewModel MainViewModel => Locator.GetRequiredService<MainViewModel>();
         public ProjectSettingsViewModel ProjectSettingsViewModel => Locator.GetRequiredService<ProjectSettingsViewModel>();
         public PreferencesViewModel PreferencesViewModel => Locator.GetRequiredService<PreferencesViewModel>();
+        public TileViewModel TileViewModel => Locator.GetRequiredService<TileViewModel>();
 
     }
 }

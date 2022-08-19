@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>main.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommunityToolkit.Mvvm, Version=8.0.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
       <HintPath>..\packages\CommunityToolkit.Mvvm.8.0.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
@@ -169,12 +172,18 @@
     <Resource Include="Icons\water.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Test.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\help.png" />
     <Resource Include="Icons\new.png" />
     <Resource Include="Icons\tooltip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\main.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />

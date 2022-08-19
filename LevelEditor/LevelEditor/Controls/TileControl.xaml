@@ -11,6 +11,14 @@
              d:DesignHeight="50" 
              d:DesignWidth="50">
 
+    <UserControl.CommandBindings>
+
+        <CommandBinding Command="Cut" 
+                        Executed="Cut_CommandBindingExecuted" 
+                        CanExecute="CanAlwaysExecute" />
+
+    </UserControl.CommandBindings>
+
     <UserControl.Resources>
 
         <ResourceDictionary>
@@ -31,22 +39,48 @@
 
         <Button>
 
-                <Button.ToolTip>
+            <Button.ToolTip>
 
-                    <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
 
-                        <Image Source="{DynamicResource TooltipImage}"/>
-                        <TextBlock Text="Click with LeftMouseButton to fill with selected tile" 
-                                   VerticalAlignment="Center" 
-                                   Margin="10 0 0 0" />
+                    <Image Source="{DynamicResource TooltipImage}"/>
+                    <TextBlock Text="Click with LeftMouseButton to fill with selected tile" 
+                               VerticalAlignment="Center" 
+                               Margin="10 0 0 0" />
 
-                    </StackPanel>
+                </StackPanel>
 
-                </Button.ToolTip>
+            </Button.ToolTip>
+            
+            <Button.ContextMenu>
+
+            <ContextMenu Name="ContextMenu">
+
+                    <MenuItem Header="_Cut"
+                              Command="Cut"
+                              IsEnabled="True">
+
+                        <MenuItem.Icon>
+                            
+                            <Image Source="{DynamicResource CutImage}"/>
+                            
+                        </MenuItem.Icon>
+                        
+                    </MenuItem>
+
+                    <Separator />
+                    
+                    <MenuItem Header="Properties" />
+                    
+            </ContextMenu>
                 
-                <Image Name="TileImage"
+            </Button.ContextMenu>
+
+            <Image Name="TileImage"
                    MouseLeftButtonDown="Tile_MouseLeftButtonDown">
-                </Image>
+
+            </Image>
+
 
         </Button>
 

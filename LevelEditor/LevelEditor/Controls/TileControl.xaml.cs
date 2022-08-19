@@ -31,8 +31,10 @@ namespace LevelEditor.Controls
 
         public TileControl(MainWindow window, Tile tile)
         {
+
             InitializeComponent();
             DataContext = ActivatorUtilities.GetServiceOrCreateInstance<TileViewModel>(Ioc.Default);
+
             mainWindow = window;
             this.tile = tile;
 
@@ -44,6 +46,15 @@ namespace LevelEditor.Controls
             tile.TileType = mainWindow.SelectedImage;
         }
 
+        private void Cut_CommandBindingExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.TileImage.Source = mainWindow.TileImages[mainWindow.DefaultImage];
+            tile.TileType = mainWindow.DefaultImage;
+        }
 
+        private void CanAlwaysExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }

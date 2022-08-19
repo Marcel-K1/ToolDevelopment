@@ -5,8 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LevelEditor.Views"
         mc:Ignorable="d"
-        Title="ProjectSettingsWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Change TileMap Settings" 
+        Height="220" 
+        Width="300"
+        ResizeMode="NoResize" 
+        WindowStyle="ToolWindow" 
+        WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Data/ResourceDictionary.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <Grid Margin="5">
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Grid.Column="0" 
+                   Text="Tilemap Size:" />
+        <TextBox Grid.Row="0" 
+                 Grid.Column="1" 
+                 x:Name="tilemapSizeTextBox" 
+                 TabIndex="100"
+                 Text="3"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"/>
+
+
+        <StackPanel Grid.Row="5" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+
+            <Button Content="Apply" 
+                    Width="100" 
+                    Margin="5 0" 
+                    TabIndex="1100" 
+                    IsDefault="True" 
+                    Click="OnApplyButtonClick"/>
+
+            <Button Content="Cancel" 
+                    Width="100" 
+                    Margin="5 0" 
+                    TabIndex="1200" 
+                    IsCancel="True" 
+                    Click="OnCancelButtonClick"/>
+
+        </StackPanel>
+
     </Grid>
+
 </Window>

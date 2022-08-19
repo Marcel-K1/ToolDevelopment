@@ -21,6 +21,23 @@
         \Icons\help.png
     </ImageSource>
 
+    <ImageSource x:Key="CutImage">
+        \Icons\cut.png
+    </ImageSource>
+
+    <ImageSource x:Key="MainImage">
+        \Icons\main.png
+    </ImageSource>
+
+    <ImageSource x:Key="WaterImage">
+        \Icons\water.png
+    </ImageSource>
+
+    <system:String x:Key="tilemapSize">
+        3
+    </system:String>
+
+
     <SolidColorBrush x:Key="BackgroundColor1" Color="BlanchedAlmond" />
 
     <SolidColorBrush x:Key="BackgroundColor2" Color="AliceBlue" />

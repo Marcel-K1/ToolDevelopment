@@ -22,11 +22,28 @@ namespace LevelEditor.Views
     /// </summary>
     public partial class ProjectSettingsWindow : Window
     {
-        public ProjectSettingsViewModel ViewModel => (ProjectSettingsViewModel)DataContext;
+
+        public ProjectSettingsViewModel ViewModel
+        {
+            get => (ProjectSettingsViewModel)GetValue(DataContextProperty);
+            set => SetValue(DataContextProperty, value);
+        }
+
         public ProjectSettingsWindow()
         {
             InitializeComponent();
-            DataContext = ActivatorUtilities.GetServiceOrCreateInstance<ProjectSettingsViewModel>(Ioc.Default);
+            ViewModel = Ioc.Default.GetRequiredService<ProjectSettingsViewModel>();
+
+        }
+
+        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        private void OnCancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
         }
     }
 }

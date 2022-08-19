@@ -10,7 +10,8 @@
         d:DataContext="{d:DesignInstance Type=Viewmodels:MainViewModel}"
         Height="768" 
         Width="1024"
-        Title="{DynamicResource MainWindowTitle}">
+        Title="{DynamicResource MainWindowTitle}"
+        Icon="{DynamicResource MainImage}">
 
     <Window.CommandBindings>
 
@@ -79,7 +80,7 @@
 
             <MenuItem Header="Edit">
 
-                <MenuItem Header="Project Settings" 
+                <MenuItem Header="Project Settings"
                           Click="OnProjectSettingsClick"/>
 
             </MenuItem>
@@ -96,7 +97,6 @@
                     </MenuItem.Icon>
 
                 </MenuItem>
-
 
             </MenuItem>
 
@@ -133,7 +133,8 @@
                     </Button.ToolTip>
                     
                     <Image Source="/Icons/water.png"
-                            MouseLeftButtonDown="WaterButtonDown">
+                           MouseLeftButtonDown="WaterButtonDown"
+                           Margin="10">
                     </Image>
 
                 </Button>
@@ -154,7 +155,8 @@
                     </Button.ToolTip>
                     
                     <Image Source="/Icons/grass.png"
-                        MouseLeftButtonDown="GrassButtonDown">
+                           MouseLeftButtonDown="GrassButtonDown"
+                           Margin="10">
 
                     </Image>
 
@@ -176,7 +178,8 @@
                     </Button.ToolTip>
                     
                     <Image Source="/Icons/ground.png"
-                        MouseLeftButtonDown="GroundButtonDown">
+                           MouseLeftButtonDown="GroundButtonDown"
+                           Margin="10">
 
                     </Image>
 

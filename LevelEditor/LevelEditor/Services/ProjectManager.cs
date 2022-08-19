@@ -24,12 +24,10 @@ namespace LevelEditor.Services
 
         public void CloseProject() => CurrentProject = null;
         public void NewProject() => CurrentProject = new Project();
-
         public void OpenProject()
         {
 
         }
-
         public void SaveProject()
         {
 

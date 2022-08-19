@@ -37,8 +37,8 @@
 
                         <Image Source="{DynamicResource TooltipImage}"/>
                         <TextBlock Text="Click with LeftMouseButton to fill with selected tile" 
-                                       VerticalAlignment="Center" 
-                                       Margin="10 0 0 0" />
+                                   VerticalAlignment="Center" 
+                                   Margin="10 0 0 0" />
 
                     </StackPanel>
 

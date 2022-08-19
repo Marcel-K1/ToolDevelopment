@@ -32,6 +32,7 @@ namespace LevelEditor
 
         public enum Tiles
         {
+            Default,
             Water,
             Grass,
             Ground
@@ -46,8 +47,14 @@ namespace LevelEditor
         public Dictionary<Tiles, ImageSource> tileImages = new Dictionary<Tiles, ImageSource>();
         public Dictionary<Tiles, ImageSource> TileImages { get => tileImages; set => tileImages = value; }
 
-        private Tiles selectedImage = Tiles.Grass;
+        private Tiles defaultImage = Tiles.Default;
+        public Tiles DefaultImage { get => defaultImage; set => defaultImage = value; }
+
+        private Tiles selectedImage = Tiles.Default;
         public Tiles SelectedImage { get => selectedImage; set => selectedImage = value; }
+
+        private List<TileControl> tileControlslist;
+        public List<TileControl> TileControls { get => tileControlslist; set => tileControlslist = value; }
 
         private List<Tile> tilesList;
         public List<Tile> TilesList { get => tilesList; set => tilesList = value; }
@@ -66,6 +73,7 @@ namespace LevelEditor
 
             ViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
 
+            TileImages[Tiles.Default] = new ImageSourceConverter().ConvertFrom(new Uri("C:/Users/Klein/Documents/GitHub/Eigenprojekte/ToolDevelopment_Abgabe/LevelEditor/LevelEditor/Icons/new.png", UriKind.Relative)) as ImageSource;
             TileImages[Tiles.Water] = new ImageSourceConverter().ConvertFrom(new Uri("Icons/water.png", UriKind.Relative)) as ImageSource; 
             TileImages[Tiles.Grass] = new ImageSourceConverter().ConvertFrom(new Uri("Icons/grass.png", UriKind.Relative)) as ImageSource; 
             TileImages[Tiles.Ground] = new ImageSourceConverter().ConvertFrom(new Uri("Icons/ground.png", UriKind.Relative)) as ImageSource;
@@ -97,25 +105,52 @@ namespace LevelEditor
         private void SetGrid()
         {
 
+            //tilesList = new List<Tile>();
+
+            //for (int x = 0; x < 3; x++)
+            //{
+
+            //    for (int y = 0; y < 3; y++)
+            //    {
+            //        Tile tile = new Tile(this);
+            //        tile.TileControl.TileImage.Source = tileImages[selectedImage];
+
+            //        EditorGrid.Children.Add(tile.TileControl);
+
+            //        //Wichtig fürs Speichern:
+            //        tile.X = x;
+            //        tile.Y = y;
+            //        tilesList.Add(tile);
+
+            //        Grid.SetRow(tile.TileControl, x);
+            //        Grid.SetColumn(tile.TileControl, y);
+            //    }
+            //}
+
+
             tilesList = new List<Tile>();
+            tileControlslist = new List<TileControl>();
 
             for (int x = 0; x < 3; x++)
             {
 
                 for (int y = 0; y < 3; y++)
                 {
-                    Tile tile = new Tile(this);
-                    tile.TileControl.TileImage.Source = tileImages[selectedImage];
+                    Tile tile = new Tile(tileImages[defaultImage]);
+                    TileControl tileControl = new TileControl(this);
+                    tileControl.TileImage.Source = tileImages[selectedImage];
 
-                    EditorGrid.Children.Add(tile.TileControl);
+                    EditorGrid.Children.Add(tileControl);
+                    tileControlslist.Add(tileControl);
 
                     //Wichtig fürs Speichern:
                     tile.X = x;
                     tile.Y = y;
+                    tile.TileImageSource = tileImages[selectedImage];
                     tilesList.Add(tile);
 
-                    Grid.SetRow(tile.TileControl, x);
-                    Grid.SetColumn(tile.TileControl, y);
+                    Grid.SetRow(tileControl, x);
+                    Grid.SetColumn(tileControl, y);
                 }
             }
 
@@ -198,7 +233,10 @@ namespace LevelEditor
 
         private void NewCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            foreach (var tileControl in tileControlslist)
+            {
+                tileControl.TileImage.Source = TileImages[DefaultImage];
+            }
         }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -215,12 +253,24 @@ namespace LevelEditor
                     if (tileList != null)
                     {
                         EditorGrid.Children.Clear();
+                        DrawGrid();
+                        //foreach (var tile in tileList)
+                        //{
+
+                        //    EditorGrid.Children.Add(tile.TileControl);
+                        //    Grid.SetRow(tile.TileControl, tile.X);
+                        //    Grid.SetColumn(tile.TileControl, tile.Y);
+                        //}
+
                         foreach (var tile in tileList)
                         {
-                            EditorGrid.Children.Add(tile.TileControl);
-                            Grid.SetRow(tile.TileControl, tile.X);
-                            Grid.SetColumn(tile.TileControl, tile.Y);
+                            TileControl tileControl = new TileControl(this);
+                            tileControl.TileImage.Source = tile.TileImageSource;
+                            EditorGrid.Children.Add(tileControl);
+                            Grid.SetRow(tileControl, tile.X);
+                            Grid.SetColumn(tileControl, tile.Y);
                         }
+
                     }
                 }
                 catch (Exception ex)

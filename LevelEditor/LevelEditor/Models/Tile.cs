@@ -1,40 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using static LevelEditor.MainWindow;
 
 namespace LevelEditor.Controls
 {
 	[Serializable]
-    public class Tile
+    public class Tile : INotifyPropertyChanged
     {
 
 		private int x;
-		public int X { get => x; set => x = value; }
+		public int X { get => x; set => OnPropertyChanged(ref x, value, nameof(X)); }
 
 		private int y;
-		public int Y { get => y; set => y = value; }
+		public int Y { get => y; set => OnPropertyChanged(ref y, value, nameof(Y)); }
 
-        public ImageSource TileImageSource { get; set; }
+		private Tiles tileType;
+		public Tiles TileType { get => tileType; set => OnPropertyChanged(ref tileType, value, nameof(TileType)); }
 
-        //public TileControl TileControl { get => tileControl; set => tileControl = value; }
 
-        //private TileControl tileControl;
-
-        public Tile(ImageSource imageSource)
+		public Tile(Tiles tileType)
 		{
 			X = 0;
 			Y = 0;
-			TileImageSource = imageSource;
+			this.tileType = tileType;
 		}
 
-		//public Tile(MainWindow window)
-		//{
-  //          TileControl = new TileControl(window);
-  //          X = 0;
-		//	Y = 0;
-		//}
+
+		[field: NonSerialized]
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnPropertyChanged<T>(ref T oldValue, T newValue, string propertyName)
+		{
+			if (oldValue.Equals(newValue)) return;
+			oldValue = newValue;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
 	}
 }

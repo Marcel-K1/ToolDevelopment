@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace LevelEditor
 {
-	[Serializable]
 	public class LevelSerializer
 	{
 		public static void Save(string path, List<Tile> tileList)

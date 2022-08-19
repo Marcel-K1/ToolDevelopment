@@ -136,9 +136,9 @@ namespace LevelEditor
 
                 for (int y = 0; y < 3; y++)
                 {
-                    Tile tile = new Tile(tileImages[defaultImage]);
-                    TileControl tileControl = new TileControl(this);
-                    tileControl.TileImage.Source = tileImages[selectedImage];
+                    Tile tile = new Tile(defaultImage);
+                    TileControl tileControl = new TileControl(this, tile);
+                    tileControl.TileImage.Source = tileImages[defaultImage];
 
                     EditorGrid.Children.Add(tileControl);
                     tileControlslist.Add(tileControl);
@@ -146,7 +146,7 @@ namespace LevelEditor
                     //Wichtig fürs Speichern:
                     tile.X = x;
                     tile.Y = y;
-                    tile.TileImageSource = tileImages[selectedImage];
+                    tile.TileType = defaultImage;
                     tilesList.Add(tile);
 
                     Grid.SetRow(tileControl, x);
@@ -233,10 +233,18 @@ namespace LevelEditor
 
         private void NewCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            foreach (var tileControl in tileControlslist)
-            {
-                tileControl.TileImage.Source = TileImages[DefaultImage];
-            }
+            EditorGrid.Children.Clear();
+            DrawGrid();
+            SetGrid();
+            //foreach (var tileControl in tileControlslist)
+            //{
+            //    tileControl.TileImage.Source = TileImages[DefaultImage];
+            //}
+            //foreach(var tile in tilesList)
+            //{
+            //    tile.TileType = defaultImage;
+            //}
+
         }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -264,8 +272,8 @@ namespace LevelEditor
 
                         foreach (var tile in tileList)
                         {
-                            TileControl tileControl = new TileControl(this);
-                            tileControl.TileImage.Source = tile.TileImageSource;
+                            TileControl tileControl = new TileControl(this, tile);
+                            tileControl.TileImage.Source = tileImages[tile.TileType];
                             EditorGrid.Children.Add(tileControl);
                             Grid.SetRow(tileControl, tile.X);
                             Grid.SetColumn(tileControl, tile.Y);

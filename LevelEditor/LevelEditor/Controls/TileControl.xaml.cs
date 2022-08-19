@@ -25,19 +25,23 @@ namespace LevelEditor.Controls
     {
         private MainWindow mainWindow;
 
+        private Tile tile;
+
         public TileViewModel ViewModel => (TileViewModel)DataContext;
 
-        public TileControl(MainWindow window)
+        public TileControl(MainWindow window, Tile tile)
         {
             InitializeComponent();
             DataContext = ActivatorUtilities.GetServiceOrCreateInstance<TileViewModel>(Ioc.Default);
             mainWindow = window;
+            this.tile = tile;
 
         }
 
         private void Tile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.TileImage.Source = mainWindow.TileImages[mainWindow.SelectedImage];
+            tile.TileType = mainWindow.SelectedImage;
         }
 
 
